@@ -446,12 +446,23 @@ RSpec.describe Luciq::Commands::Query do
   end
 
   describe '#app_hangs' do
-    it 'maps status ids and typed filters into list_app_hangs' do
+    it 'lists hangs through list_crashes with the APP_HANG type and the typed filters' do
       options = { slug: 'a', mode: 'production', status: ['open'], platform: ['ANDROID'], app_version: ['2.0'] }
 
       expect(client).to receive(:invoke_tool).with(
-        'list_app_hangs',
-        hash_including(filters: { 'status_id' => [1], 'platform' => ['ANDROID'], 'app_versions' => ['2.0'] })
+        'list_crashes',
+        hash_including(filters: { 'type' => ['APP_HANG'], 'status_id' => [1], 'platform' => ['ANDROID'],
+                                  'app_versions' => ['2.0'] })
+      ).and_return({})
+
+      expect { described_class.new(options).app_hangs }.to output.to_stdout
+    end
+
+    it 'keeps the APP_HANG type when --filters carries another type' do
+      options = { slug: 'a', mode: 'production', filters: '{"type":["CRASH"],"current_views":["Home"]}' }
+
+      expect(client).to receive(:invoke_tool).with(
+        'list_crashes', hash_including(filters: { 'type' => ['APP_HANG'], 'current_views' => ['Home'] })
       ).and_return({})
 
       expect { described_class.new(options).app_hangs }.to output.to_stdout

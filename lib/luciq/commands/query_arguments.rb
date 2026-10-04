@@ -46,8 +46,10 @@ module Luciq
         f
       end
 
+      # App hangs are the APP_HANG type of list_crashes; list_app_hangs is deprecated.
       def hang_filters
         f = raw_filters
+        f['type'] = ['APP_HANG']
         ids = map_ids(CRASH_STATUS_IDS, @options[:status])
         f['status_id'] = ids unless ids.empty?
         f['platform'] = Array(@options[:platform]) if @options[:platform]

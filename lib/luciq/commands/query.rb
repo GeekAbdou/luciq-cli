@@ -40,7 +40,7 @@ module Luciq
       end
 
       def app_hangs
-        execute('list_app_hangs') { base_args.merge(page_args, sort_args, filters_arg(hang_filters)) }
+        execute('list_crashes') { base_args.merge(page_args, sort_args, filters_arg(hang_filters)) }
       end
 
       def occurrence_tokens(number)
