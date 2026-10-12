@@ -46,7 +46,6 @@ module Luciq
         f
       end
 
-      # App hangs are the APP_HANG type of list_crashes; list_app_hangs is deprecated.
       def hang_filters
         f = raw_filters
         f['type'] = ['APP_HANG']
