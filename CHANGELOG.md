@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `luciq crashes hangs` now calls the MCP's `list_crashes` with the `APP_HANG` type instead of the deprecated `list_app_hangs`. It needs the Luciq MCP release that adds `APP_HANG`.
+- **Breaking:** `luciq crashes hangs` is removed. Use `luciq crashes list --type APP_HANG` to list app hangs.
 
 ## [0.3.0] - 2026-08-04
 

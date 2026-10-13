@@ -26,6 +26,16 @@ RSpec.describe Luciq::Commands::Query do
       expect { described_class.new(options).crashes_list }.to output(/crashes/).to_stdout
     end
 
+    it 'lists app hangs with --type APP_HANG' do
+      options = { slug: 'a', mode: 'production', type: ['APP_HANG'] }
+
+      expect(client).to receive(:invoke_tool).with(
+        'list_crashes', hash_including(filters: { 'type' => ['APP_HANG'] })
+      ).and_return({})
+
+      expect { described_class.new(options).crashes_list }.to output.to_stdout
+    end
+
     it 'merges the raw --filters JSON escape hatch' do
       options = { slug: 'a', mode: 'production', filters: '{"app_versions":["1.2.3"]}' }
 
@@ -442,30 +452,6 @@ RSpec.describe Luciq::Commands::Query do
         .and_return({})
 
       expect { described_class.new({ slug: 'a', mode: 'production' }).crash_diagnostics(9) }.to output.to_stdout
-    end
-  end
-
-  describe '#app_hangs' do
-    it 'lists hangs through list_crashes with the APP_HANG type and the typed filters' do
-      options = { slug: 'a', mode: 'production', status: ['open'], platform: ['ANDROID'], app_version: ['2.0'] }
-
-      expect(client).to receive(:invoke_tool).with(
-        'list_crashes',
-        hash_including(filters: { 'type' => ['APP_HANG'], 'status_id' => [1], 'platform' => ['ANDROID'],
-                                  'app_versions' => ['2.0'] })
-      ).and_return({})
-
-      expect { described_class.new(options).app_hangs }.to output.to_stdout
-    end
-
-    it 'keeps the APP_HANG type when --filters carries another type' do
-      options = { slug: 'a', mode: 'production', filters: '{"type":["CRASH"],"current_views":["Home"]}' }
-
-      expect(client).to receive(:invoke_tool).with(
-        'list_crashes', hash_including(filters: { 'type' => ['APP_HANG'], 'current_views' => ['Home'] })
-      ).and_return({})
-
-      expect { described_class.new(options).app_hangs }.to output.to_stdout
     end
   end
 
