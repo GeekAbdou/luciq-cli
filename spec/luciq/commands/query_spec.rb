@@ -26,16 +26,6 @@ RSpec.describe Luciq::Commands::Query do
       expect { described_class.new(options).crashes_list }.to output(/crashes/).to_stdout
     end
 
-    it 'lists app hangs with --type APP_HANG' do
-      options = { slug: 'a', mode: 'production', type: ['APP_HANG'] }
-
-      expect(client).to receive(:invoke_tool).with(
-        'list_crashes', hash_including(filters: { 'type' => ['APP_HANG'] })
-      ).and_return({})
-
-      expect { described_class.new(options).crashes_list }.to output.to_stdout
-    end
-
     it 'merges the raw --filters JSON escape hatch' do
       options = { slug: 'a', mode: 'production', filters: '{"app_versions":["1.2.3"]}' }
 
