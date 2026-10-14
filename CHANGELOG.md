@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `FORCE_RESTART` value for `luciq crashes list --type`, to list force restarts. The server lists them only when this value is given, and only on plans that include force restarts.
+
 ## [0.3.0] - 2026-08-04
 
 ### Changed

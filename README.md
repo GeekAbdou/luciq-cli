@@ -165,7 +165,7 @@ keys each command accepts.
 
 | Subcommand | Description |
 |------------|-------------|
-| `list` | List crashes. Flags: `--status` (open/closed/in_progress), `--platform` (IOS/ANDROID/DART/JAVASCRIPT), `--type` (CRASH/ANR/OOM/NON_FATAL), `--app-version` |
+| `list` | List crashes. Flags: `--status` (open/closed/in_progress), `--platform` (IOS/ANDROID/DART/JAVASCRIPT), `--type` (CRASH/ANR/OOM/NON_FATAL/FORCE_RESTART; force restarts are listed only with FORCE_RESTART), `--app-version` |
 | `show --number N` | Details for one crash |
 | `patterns --number N` | Grouped patterns. Flags: `--pattern-key`, `--sort-by`, `--direction` |
 | `diagnostics --number N` | Diagnostics for one crash |

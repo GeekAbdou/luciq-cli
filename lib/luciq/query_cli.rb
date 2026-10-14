@@ -47,7 +47,8 @@ module Luciq
         os_versions    ["17.4", ...]
         platform       ["IOS","ANDROID","DART","JAVASCRIPT"]
         current_views  ["<screen-name>", ...]
-        type           ["CRASH","ANR","OOM","NON_FATAL"]
+        type           ["CRASH","ANR","OOM","NON_FATAL","FORCE_RESTART"]
+                       (force restarts are listed only when FORCE_RESTART is given)
         subtype        ["CRITICAL","ERROR","WARNING","INFO"]  (needs NON_FATAL in type)
         feature_flags  ["<flag>" or "<flag> -> <variant>", ...]
 
@@ -58,7 +59,7 @@ module Luciq
     QueryOptions.sort(self, sort_by_enum: SORT_FIELDS)
     option :status, type: :array, enum: %w[open closed in_progress], desc: 'Filter by status'
     option :platform, type: :array, enum: %w[IOS ANDROID DART JAVASCRIPT], desc: 'Filter by platform'
-    option :type, type: :array, enum: %w[CRASH ANR OOM NON_FATAL], desc: 'Filter by crash type'
+    option :type, type: :array, enum: %w[CRASH ANR OOM NON_FATAL FORCE_RESTART], desc: 'Filter by crash type'
     option :app_version, type: :array, desc: 'Filter by app version(s)'
     QueryOptions.raw_filters(self)
     def list
